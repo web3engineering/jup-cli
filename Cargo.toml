@@ -1,0 +1,13 @@
+[package]
+name = "jup-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+jupiter-swap-api-client = { git = "https://github.com/jup-ag/jupiter-swap-api-client.git", package = "jupiter-swap-api-client"}
+solana-client = "2.0.0"
+solana-sdk = "2.0.0"
+clap = { version = "4.5.11", features = ["derive"] }
+tokio = { version = "1.39.2", features = ["full"] }
+anyhow = "1.0.86"
+bincode = "1.3.3"
