@@ -64,11 +64,16 @@ async fn main() -> anyhow::Result<()> { // Added anyhow::Result for error handli
             keypair_path,
             rpc_url,
         } => {
-            let input_mint = Pubkey::from_str(&from)
-                .map_err(|e| anyhow::anyhow!(format!("Invalid --from mint address '{}': {}", from, e)))?;
-            let output_mint = Pubkey::from_str(&to)
-                .map_err(|e| anyhow::anyhow!(format!("Invalid --to mint address '{}': {}", to, e)))?;
-            
+            let parse_mint = |m: &str| -> anyhow::Result<Pubkey> {
+                if m == "SOL" {
+                    Pubkey::from_str("So11111111111111111111111111111111111111112")
+                } else {
+                    Pubkey::from_str(m)
+                }.map_err(|e| anyhow::anyhow!("Map parsing error"))
+            };
+            let input_mint = parse_mint(&from)?;
+            let output_mint = parse_mint(&to)?;
+
             let signer = solana_sdk::signer::keypair::read_keypair_file(&keypair_path).map_err(|e|
                 anyhow::anyhow!(format!("Failed to read keypair from file '{}': {}", keypair_path, e))
             )?;
